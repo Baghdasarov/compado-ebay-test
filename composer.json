@@ -1,8 +1,10 @@
 {
     "require": {
-        "php": "7.4.*",
-        "guzzlehttp/guzzle": "7.0",
-        "symfony/http-foundation": "^5.2"
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "symfony/http-foundation": "^5.2",
+        "symfony/error-handler": "^5.2",
+        "ext-json": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.2"
