@@ -2,6 +2,8 @@
 
 require_once 'vendor/autoload.php';
 
+use App\FindItemsByKeywords;
+use App\FindItemsByKeywordsQuery;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,3 +21,5 @@ if (!$request->query->has('keywords')) {
     $response->send();
     die();
 }
+
+(new FindItemsByKeywords())->search(FindItemsByKeywordsQuery::fromRequest($request));
