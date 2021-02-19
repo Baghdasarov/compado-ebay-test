@@ -3,9 +3,10 @@
 
 namespace App;
 
+use JsonSerializable;
 use Symfony\Component\HttpFoundation\Request;
 
-class FindItemsByKeywordsQuery
+class FindItemsByKeywordsQuery implements JsonSerializable
 {
     public string $keywords;
     public ?float $maxPrice;
@@ -40,7 +41,7 @@ class FindItemsByKeywordsQuery
         );
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         $arr = [
             'keywords' => $this->keywords,

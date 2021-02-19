@@ -22,4 +22,12 @@ if (!$request->query->has('keywords')) {
     die();
 }
 
-(new FindItemsByKeywords())->search(FindItemsByKeywordsQuery::fromRequest($request));
+$searchResults = (new FindItemsByKeywords())->search(FindItemsByKeywordsQuery::fromRequest($request));
+
+$response = new JsonResponse([
+    'error' => false,
+    'data' => $searchResults
+]);
+
+$response->send();
+die();

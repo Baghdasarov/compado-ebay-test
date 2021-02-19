@@ -3,7 +3,9 @@
 namespace App;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use JsonException;
 
 class FindItemsByKeywords
 {
@@ -25,16 +27,32 @@ class FindItemsByKeywords
         $this->client = new Client();
     }
 
-    public function search(FindItemsByKeywordsQuery $keywordsQuery)
+    /**
+     * @param FindItemsByKeywordsQuery $keywordsQuery
+     * @return Item[]
+     * @throws GuzzleException|JsonException
+     */
+    public function search(FindItemsByKeywordsQuery $keywordsQuery): array
     {
         $response = $this->client->post($this->url, [
             RequestOptions::HEADERS => $this->headers,
-            RequestOptions::JSON => $keywordsQuery->toArray()
+            RequestOptions::JSON => $keywordsQuery
         ]);
 
         $contents = $response->getBody()->getContents();
-        $arr = json_decode($contents, true);
+        $arr = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+        $searchResult = $arr['findItemsByKeywordsResponse'][0]['searchResult'][0];
 
-        dd($arr);
+        if ((int)$searchResult['@count'] === 0) {
+            return [];
+        }
+
+        $items = [];
+
+        foreach ($searchResult['item'] as $item) {
+            $items[] = Item::fromArray($item);
+        }
+
+        return $items;
     }
 }
