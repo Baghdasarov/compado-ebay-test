@@ -22,7 +22,8 @@ if (!$request->query->has('keywords')) {
     die();
 }
 
-$searchResults = (new FindItemsByKeywords())->search(FindItemsByKeywordsQuery::fromRequest($request));
+$appId = 'WandoInt-217b-42d8-a699-e79808dd505e';
+$searchResults = (new FindItemsByKeywords($appId))->search(FindItemsByKeywordsQuery::fromRequest($request));
 
 $response = new JsonResponse([
     'error' => false,

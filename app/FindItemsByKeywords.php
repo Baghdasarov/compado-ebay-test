@@ -11,7 +11,6 @@ class FindItemsByKeywords
 {
     private array $headers = [
         'X-EBAY-SOA-OPERATION-NAME' => 'findItemsByKeywords',
-        'X-EBAY-SOA-SECURITY-APPNAME' => 'WandoInt-217b-42d8-a699-e79808dd505e',
         'X-EBAY-SOA-REQUEST-DATA-FORMAT' => 'JSON',
     ];
 
@@ -22,9 +21,11 @@ class FindItemsByKeywords
      */
     private Client $client;
 
-    public function __construct()
+    public function __construct(string $appId)
     {
         $this->client = new Client();
+
+        $this->headers['X-EBAY-SOA-SECURITY-APPNAME'] = $appId;
     }
 
     /**
