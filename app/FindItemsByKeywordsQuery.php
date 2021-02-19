@@ -40,7 +40,7 @@ class FindItemsByKeywordsQuery
         );
     }
 
-    public function __serialize(): array
+    public function toArray(): array
     {
         $arr = [
             'keywords' => $this->keywords,
@@ -59,8 +59,8 @@ class FindItemsByKeywordsQuery
 
         if ($this->minPrice !== null) {
             $arr['itemFilter'][] = [
-                'name' => 'MaxPrice',
-                'value' => 25
+                'name' => 'MinPrice',
+                'value' => $this->minPrice
             ];
         }
 

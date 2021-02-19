@@ -29,7 +29,7 @@ class FindItemsByKeywords
     {
         $response = $this->client->post($this->url, [
             RequestOptions::HEADERS => $this->headers,
-            RequestOptions::JSON => $keywordsQuery
+            RequestOptions::JSON => $keywordsQuery->toArray()
         ]);
 
         $contents = $response->getBody()->getContents();
