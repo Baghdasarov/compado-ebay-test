@@ -33,12 +33,22 @@ class FindItemsByKeywordsQuery implements JsonSerializable
     {
         $query = $request->query;
 
-        return new self(
+        $keywordsQuery = new self(
             $query->get('keywords'),
             $query->get('price_max'),
             $query->get('price_mix'),
             $query->get('sorting'),
         );
+
+        if ($query->has('page')) {
+            $keywordsQuery->page = (int)$query->get('page');
+        }
+
+        if ($query->has('per_page')) {
+            $keywordsQuery->perPage = (int)$query->get('per_page');
+        }
+
+        return $keywordsQuery;
     }
 
     public function jsonSerialize(): array
